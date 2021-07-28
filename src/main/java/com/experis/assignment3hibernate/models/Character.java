@@ -18,7 +18,7 @@ public class Character {
 
     private String alias;
 
-    private int gender;
+    private String gender;
 
     private  String photo;
 
@@ -65,11 +65,11 @@ public class Character {
         this.alias = alias;
     }
 
-    public int getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

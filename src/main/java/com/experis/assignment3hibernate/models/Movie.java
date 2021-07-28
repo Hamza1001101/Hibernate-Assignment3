@@ -14,24 +14,25 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "_title", nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "_genre", nullable = false)
+    @Column(name = "genre", nullable = false)
     private String genre;
 
-    @Column(name = "_release_year")
+    @Column(name = "release_year")
     private Date releaseYear;
 
-    @Column(name = "_director")
+
+
+    @Column(name = "director")
     private String director;
 
-    @Column(name = "_photo")
+    @Column(name = "photo")
     private String photo;
 
-    @Column(name = "_trailer")
+    @Column(name = "trailer")
     private String trailer;
-
 
 
     @ManyToMany

@@ -9,6 +9,8 @@ public class Franchise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "franchise_name")
     private String name;
     private String description;
 
