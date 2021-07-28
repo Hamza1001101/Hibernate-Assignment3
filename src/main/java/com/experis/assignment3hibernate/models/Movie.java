@@ -38,19 +38,19 @@ public class Movie {
     @ManyToMany
     @JoinTable(
             name = "charecter_movies",
-            joinColumns = {@JoinColumn(name = "charecter_id")},
-            inverseJoinColumns = {@JoinColumn(name = "movie_id")}
+            joinColumns = {@JoinColumn(name = "movie_id")},
+            inverseJoinColumns = {@JoinColumn(name = "character_id")}
     )
     public List<Character> characterData;
 
 
-    @JsonGetter("characters")
+  /*  @JsonGetter("characters")
     public List<String> characters() {
         return characterData.stream()
                 .map(characterData -> {
                     return "/api/v1/characters/" + characterData.getId();
                 }).collect(Collectors.toList());
-    }
+    } */
 
 
 
