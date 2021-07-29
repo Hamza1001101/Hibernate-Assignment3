@@ -2,6 +2,7 @@ package com.experis.assignment3hibernate.controllers;
 
 
 import com.experis.assignment3hibernate.models.Character;
+import com.experis.assignment3hibernate.models.Movie;
 import com.experis.assignment3hibernate.repositories.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -18,7 +20,7 @@ public class CharacterController {
     @Autowired
     private CharacterRepository characterRepository;
 
-   @GetMapping
+    @GetMapping
     public ResponseEntity<List<Character>> getAllCharacters() {
         List<Character> data = characterRepository.findAll();
         HttpStatus status = HttpStatus.OK;
@@ -26,5 +28,21 @@ public class CharacterController {
     }
 
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Character> getCharacterById(@PathVariable Long id) {
+        Optional<Character> characterData = characterRepository.findById(id);
+        return characterData.map(character -> new ResponseEntity<>(character, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
+
+
+    @PostMapping
+    public ResponseEntity<Character> addCharacter(@RequestBody Character character) {
+        Character add = characterRepository.save(character);
+        HttpStatus status;
+        status = HttpStatus.CREATED;
+        // Return a location -> url to get the new resource
+        return new ResponseEntity<>(add, status);
+    }
 }
