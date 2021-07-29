@@ -4,7 +4,6 @@ package com.experis.assignment3hibernate.controllers;
 import com.experis.assignment3hibernate.models.Character;
 import com.experis.assignment3hibernate.models.Franchise;
 import com.experis.assignment3hibernate.models.Movie;
-import com.experis.assignment3hibernate.repositories.CharacterRepository;
 import com.experis.assignment3hibernate.repositories.FranchiseRepository;
 import com.experis.assignment3hibernate.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +100,7 @@ public class FranchiseController {
         return new ResponseEntity<>(franchise, HttpStatus.OK);
     }
 
-   @GetMapping("/getAllMoviesInFranchises/{id}")
+   @GetMapping("{id}/getAllMoviesInFranchises")
     public ResponseEntity<List<Movie>> getAllMoviesInFranchises(@PathVariable Long id) {
         Franchise franchise;
         List<Movie> movies = new ArrayList<>();

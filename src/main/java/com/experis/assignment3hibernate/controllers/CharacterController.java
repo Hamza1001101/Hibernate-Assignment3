@@ -2,7 +2,6 @@ package com.experis.assignment3hibernate.controllers;
 
 
 import com.experis.assignment3hibernate.models.Character;
-import com.experis.assignment3hibernate.models.Movie;
 import com.experis.assignment3hibernate.repositories.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
