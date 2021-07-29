@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -36,7 +37,6 @@ public class CharacterController {
     }
 
 
-
     @PostMapping
     public ResponseEntity<Character> addCharacter(@RequestBody Character character) {
         Character add = characterRepository.save(character);
@@ -45,4 +45,29 @@ public class CharacterController {
         // Return a location -> url to get the new resource
         return new ResponseEntity<>(add, status);
     }
+
+   @PutMapping("/{id}")
+    public ResponseEntity<Character> updateAddress(@RequestBody Character character, @PathVariable Long id){
+        HttpStatus status;
+        Character retAdd = new Character();
+        if(!Objects.equals(id, character.getId())){
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(retAdd, status);
+        }
+        retAdd = characterRepository.save(character);
+        status = HttpStatus.NO_CONTENT;
+        return new ResponseEntity<>(retAdd, status);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteCharecter(@PathVariable("id") long id) {
+        try {
+            characterRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

@@ -44,13 +44,13 @@ public class Movie {
     public List<Character> characterData;
 
 
-  /*  @JsonGetter("characters")
+    @JsonGetter("characters")
     public List<String> characters() {
         return characterData.stream()
                 .map(characterData -> {
                     return "/api/v1/characters/" + characterData.getId();
                 }).collect(Collectors.toList());
-    } */
+    }
 
 
 

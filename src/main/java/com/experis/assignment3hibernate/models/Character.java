@@ -29,7 +29,7 @@ public class Character {
     public List<Movie> movies;
 
     @JsonGetter("movies")
-    public List<String> moviesGetter() {
+    public List<String> movies() {
         if(movies != null){
             return movies.stream()
                     .map(movie -> {
