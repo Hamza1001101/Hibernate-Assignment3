@@ -18,7 +18,7 @@ public class Franchise {
     private String description;
 
     @OneToMany
-    @JoinColumn(name = "franchise")
+    @JoinColumn(name = "franchise_id")
     List<Movie> movies;
 
 

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -116,29 +117,22 @@ public class FranchiseController {
         return new ResponseEntity<>(movies, status);
     }
 
-    @GetMapping("{id}/getAllCharactersInFranchise/")
-    public ResponseEntity<List<Character>> getAllCharactersInFranchise(@PathVariable Long id) {
+
+    @GetMapping("{id}/getAllCharactersInFranchise")
+    public ResponseEntity<LinkedHashSet<Character>> getAllCharactersInFranchise(@PathVariable Long id) {
         List<Movie> movies;
-
+        var characters = new LinkedHashSet<Character>();
         HttpStatus status;
+        if (franchiseRepository.existsById(id)) {
+            status = HttpStatus.OK;
+            movies = franchiseRepository.findById(id).get().getMovies();
 
-        if (!franchiseRepository.existsById(id)) {
-            status= HttpStatus.NOT_FOUND;
-            return new ResponseEntity<>(null, status);
+            characters = movies.stream()
+                    .flatMap(m -> m.getCharacters()
+                            .stream()).collect(Collectors.toCollection(LinkedHashSet::new));
+        } else {
+            status = HttpStatus.NOT_FOUND;
         }
-
-        movies = franchiseRepository.findById(id).get().getMovies();
-        HashMap<Long, Character> characterHashMap = new HashMap<>();
-
-        movies.stream().map(Movie::getCharacters)
-                .forEach(list -> {
-                    list.forEach(character -> {
-                        characterHashMap.put(character.getId(), character);
-                    });
-                });
-        List<Character> characters = new ArrayList<Character>((Collection<? extends Character>) characterHashMap);
-
-        status = HttpStatus.OK;
         return new ResponseEntity<>(characters, status);
     }
 

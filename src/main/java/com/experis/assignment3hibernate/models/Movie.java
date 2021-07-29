@@ -57,6 +57,12 @@ public class Movie {
     @JoinColumn(name = "franchise_id")
     public Franchise franchise;
 
+    @JsonGetter("franchise")
+    public String franchise() {
+        if (franchise != null) {
+            return "/api/v1/franchises/" + franchise.getId();
+        }else return null;
+    }
 
 
 
