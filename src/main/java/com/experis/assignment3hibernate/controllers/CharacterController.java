@@ -47,7 +47,7 @@ public class CharacterController {
     }
 
    @PutMapping("/{id}")
-    public ResponseEntity<Character> updateAddress(@RequestBody Character character, @PathVariable Long id){
+    public ResponseEntity<Character> updateCharacter(@RequestBody Character character, @PathVariable Long id){
         HttpStatus status;
         Character retAdd = new Character();
         if(!Objects.equals(id, character.getId())){

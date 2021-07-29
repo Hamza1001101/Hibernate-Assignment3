@@ -1,15 +1,17 @@
 package com.experis.assignment3hibernate.controllers;
 
 
+import com.experis.assignment3hibernate.models.Character;
 import com.experis.assignment3hibernate.models.Movie;
+import com.experis.assignment3hibernate.repositories.CharacterRepository;
 import com.experis.assignment3hibernate.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -19,6 +21,9 @@ public class MovieController {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private CharacterRepository characterRepository;
 
     @GetMapping
     public ResponseEntity<List<Movie>> getAllMovies() {
@@ -78,4 +83,43 @@ public class MovieController {
         }
     }
 
+    @PutMapping("{id}/characters")
+    public ResponseEntity<Movie> updateCharactersInMovie(@PathVariable Long id, @RequestBody List<Long> charactarIds) {
+        Movie movie;
+
+        if (!movieRepository.existsById(id))
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        movie = movieRepository.findById(id).get();
+        List<Character> characters = new ArrayList<>();
+        for (Long characterId : charactarIds)
+            if (characterRepository.existsById(characterId))
+                characters.add(characterRepository.findById(characterId).get());
+
+        movie.setCharacters(characters);
+        movieRepository.save(movie);
+        return new ResponseEntity<>(movie, HttpStatus.OK);
+    }
+
+    //Get all characters in movie.
+
+    @GetMapping("/getAllCharactersInMovie/{id}")
+    public ResponseEntity<List<Character>> getAllCharactersInMovies(@PathVariable Long id) {
+        List<Character> characters = new ArrayList<>();
+        Movie movie;
+        HttpStatus status;
+
+        if (movieRepository.existsById(id)) {
+            status = HttpStatus.OK;
+
+            movie = movieRepository.findById(id).get();
+            characters = movie.getCharacters();
+
+
+        } else {
+            status = HttpStatus.NOT_FOUND;
+        }
+
+        return new ResponseEntity<>(characters, status);
+    }
 }

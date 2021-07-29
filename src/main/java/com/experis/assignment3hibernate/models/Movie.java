@@ -24,9 +24,9 @@ public class Movie {
     private Date releaseYear;
 
 
-
     @Column(name = "director")
     private String director;
+
 
     @Column(name = "photo")
     private String photo;
@@ -37,26 +37,28 @@ public class Movie {
 
     @ManyToMany
     @JoinTable(
-            name = "charecter_movies",
+            name = "character_movies",
             joinColumns = {@JoinColumn(name = "movie_id")},
             inverseJoinColumns = {@JoinColumn(name = "character_id")}
     )
-    public List<Character> characterData;
+    public List<Character> characters;
 
 
     @JsonGetter("characters")
     public List<String> characters() {
-        return characterData.stream()
+        return characters.stream()
                 .map(characterData -> {
                     return "/api/v1/characters/" + characterData.getId();
                 }).collect(Collectors.toList());
     }
 
 
-
     @ManyToOne
     @JoinColumn(name = "franchise_id")
     public Franchise franchise;
+
+
+
 
     public Long getId() {
         return id;
@@ -113,4 +115,21 @@ public class Movie {
     public void setTrailer(String trailer) {
         this.trailer = trailer;
     }
+
+    public List<Character> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(List<Character> characters) {
+        this.characters = characters;
+    }
+
+    public Franchise getFranchise() {
+        return franchise;
+    }
+
+    public void setFranchise(Franchise franchise) {
+        this.franchise = franchise;
+    }
+
 }

@@ -25,7 +25,12 @@ public class Character {
 
 
     // Charecter entity
-    @ManyToMany(mappedBy = "characterData")
+    @ManyToMany
+    @JoinTable(
+            name = "character_movies",
+            joinColumns = {@JoinColumn(name = "character_id")},
+            inverseJoinColumns = {@JoinColumn(name = "movie_id")}
+    )
     public List<Movie> movies;
 
     @JsonGetter("movies")
