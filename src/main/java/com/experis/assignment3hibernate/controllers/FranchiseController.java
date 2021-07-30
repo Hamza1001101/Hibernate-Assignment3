@@ -100,7 +100,7 @@ public class FranchiseController {
         return new ResponseEntity<>(franchise, HttpStatus.OK);
     }
 
-   @GetMapping("{id}/getAllMoviesInFranchises")
+    @GetMapping("{id}/getAllMoviesInFranchises")
     public ResponseEntity<List<Movie>> getAllMoviesInFranchises(@PathVariable Long id) {
         Franchise franchise;
         List<Movie> movies = new ArrayList<>();
@@ -110,7 +110,7 @@ public class FranchiseController {
             status = HttpStatus.OK;
             franchise = franchiseRepository.findById(id).get();
             movies = franchise.getMovies();
-        }else {
+        } else {
             status = HttpStatus.NOT_FOUND;
         }
         return new ResponseEntity<>(movies, status);
@@ -132,6 +132,8 @@ public class FranchiseController {
         } else {
             status = HttpStatus.NOT_FOUND;
         }
+
+
         return new ResponseEntity<>(characters, status);
     }
 

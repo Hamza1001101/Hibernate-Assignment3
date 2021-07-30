@@ -115,7 +115,6 @@ public class MovieController {
             movie = movieRepository.findById(id).get();
             characters = movie.getCharacters();
 
-
         } else {
             status = HttpStatus.NOT_FOUND;
         }
