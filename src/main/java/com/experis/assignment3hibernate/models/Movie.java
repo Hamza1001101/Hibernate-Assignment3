@@ -61,9 +61,8 @@ public class Movie {
     public String franchise() {
         if (franchise != null) {
             return "/api/v1/franchises/" + franchise.getId();
-        }else return null;
+        } else return null;
     }
-
 
 
     public Long getId() {

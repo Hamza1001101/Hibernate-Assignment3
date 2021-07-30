@@ -22,7 +22,6 @@ public class Franchise {
     List<Movie> movies;
 
 
-
     @JsonGetter("movies")
     public List<String> movies() {
         if (movies != null) {
@@ -33,7 +32,6 @@ public class Franchise {
         }
         return null;
     }
-
 
 
     public List<Movie> getMovies() {

@@ -26,7 +26,11 @@ public class FranchiseController {
     private MovieRepository movieRepository;
 
 
-    //working
+    /**
+     * Get all franchises
+     *
+     * @return - all franchises
+     */
     @GetMapping
     public ResponseEntity<List<Franchise>> getAllFranchise() {
         List<Franchise> data = franchiseRepository.findAll();
@@ -34,17 +38,27 @@ public class FranchiseController {
         return new ResponseEntity<>(data, status);
     }
 
-    //working
+    /**
+     * Add franchise to the database
+     *
+     * @param franchise - franchise
+     * @return - the franchise
+     */
     @PostMapping
     public ResponseEntity<Franchise> addFranchise(@RequestBody Franchise franchise) {
         Franchise add = franchiseRepository.save(franchise);
         HttpStatus status;
         status = HttpStatus.CREATED;
-        // Return a location -> url to get the new resource
         return new ResponseEntity<>(add, status);
     }
 
 
+    /**
+     * Get specific franchise
+     *
+     * @param id -franchise id
+     * @return - info about that specific franchise
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Franchise> getSpecificFranchise(@PathVariable Long id) {
         HttpStatus status;
@@ -59,6 +73,13 @@ public class FranchiseController {
     }
 
 
+    /**
+     * Update franchise
+     *
+     * @param id        - franchise id
+     * @param franchise - the new franchise
+     * @return - newly updated franchise.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Franchise> updateFranchise(@PathVariable("id") Long id, @RequestBody Franchise franchise) {
         Optional<Franchise> franchiseData = franchiseRepository.findById(id);
@@ -72,7 +93,12 @@ public class FranchiseController {
     }
 
 
-    //working
+    /**
+     * Delete franchise
+     *
+     * @param id - franchise-id to be deleted
+     * @return - franchises without the deleted franchise
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteFranchise(@PathVariable("id") long id) {
         try {
@@ -83,6 +109,13 @@ public class FranchiseController {
         }
     }
 
+    /**
+     * Update movies in franchises
+     *
+     * @param id       -franchise id
+     * @param moviesId - Movie id
+     * @return - the newly updated franchise database
+     */
     @PutMapping("{id}/movies")
     public ResponseEntity<Franchise> updateMoviesInFranchise(@PathVariable Long id, @RequestBody List<Long> moviesId) {
         Franchise franchise;
@@ -100,6 +133,12 @@ public class FranchiseController {
         return new ResponseEntity<>(franchise, HttpStatus.OK);
     }
 
+    /**
+     * Get all movies in franchises
+     *
+     * @param id - franchise id
+     * @return - list of movies in franchises.
+     */
     @GetMapping("{id}/getAllMoviesInFranchises")
     public ResponseEntity<List<Movie>> getAllMoviesInFranchises(@PathVariable Long id) {
         Franchise franchise;
@@ -117,6 +156,12 @@ public class FranchiseController {
     }
 
 
+    /**
+     * Get all characters in franchises
+     *
+     * @param id - id
+     * @return - list of all characters in franchise.
+     */
     @GetMapping("{id}/getAllCharactersInFranchise")
     public ResponseEntity<LinkedHashSet<Character>> getAllCharactersInFranchise(@PathVariable Long id) {
         List<Movie> movies;
@@ -132,7 +177,6 @@ public class FranchiseController {
         } else {
             status = HttpStatus.NOT_FOUND;
         }
-
 
         return new ResponseEntity<>(characters, status);
     }
